@@ -20,7 +20,7 @@ export async function GET() {
       return NextResponse.json({ message: "User not found" }, { status: 404 });
     }
 
-    const signedUpEvents = user.events.map((event) => event.eventId);
+    const signedUpEvents = user.events.map((event: { eventId: string }) => event.eventId);
 
     return NextResponse.json({ signedUpEvents }, { status: 200 });
   } catch (error) {
