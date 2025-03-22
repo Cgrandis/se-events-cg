@@ -1,82 +1,41 @@
 "use client";
 
-import { signIn } from "next-auth/react";
-import { useState } from "react";
-import { useRouter } from "next/navigation";
 import Link from "next/link";
+import AuthInput from "@/app/(components)/AuthInput";
+import { GoogleSignInButton } from "@/app/(components)/GoogleSignInButton";
+import FormError from "@/app/(components)/FormError";
+import { useLogin } from "@/app/hooks/useLogin";
 
 export default function LoginPage() {
-  const router = useRouter();
-  const [formData, setFormData] = useState({ email: "", password: "" });
-  const [error, setError] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setError("");
-    setIsLoading(true);
-
-    const result = await signIn("credentials", {
-      redirect: false,
-      email: formData.email,
-      password: formData.password,
-    });
-
-    setIsLoading(false);
-
-    if (result?.error) {
-      setError("Invalid credentials");
-    } else {
-      router.push("/dashboard");
-    }
-  };
-
-  const handleGoogleSignIn = async () => {
-    setIsLoading(true);
-    try {
-      const result = await signIn("google", { redirect: false });
-
-      if (result?.error) {
-        setError("Google sign-in failed. Try again.");
-        setIsLoading(false);
-      } else {
-        router.push("/dashboard");
-      }
-    } catch (error) {
-      console.error("Google sign-in error:", error);
-      setError("Something went wrong. Try again.");
-      setIsLoading(false);
-    }
-  };
+  const {
+    formData,
+    error,
+    isLoading,
+    handleChange,
+    handleSubmit,
+    handleGoogleSignIn,
+  } = useLogin();
 
   return (
     <div className="max-w-md mx-auto mt-10 p-6 border rounded-lg shadow-md">
       <h2 className="text-xl font-semibold mb-4">User Login</h2>
-      {error && <p className="text-red-500">{error}</p>}
+      {error && <FormError message={error} />}
 
       <form onSubmit={handleSubmit} className="space-y-4">
-        <input
+        <AuthInput
           type="email"
           name="email"
           placeholder="Email"
           value={formData.email}
           onChange={handleChange}
-          className="w-full p-2 border rounded"
-          required
           disabled={isLoading}
         />
-        <input
+        <AuthInput
           type="password"
           name="password"
           placeholder="Password"
           value={formData.password}
           onChange={handleChange}
-          className="w-full p-2 border rounded"
-          required
           disabled={isLoading}
         />
         <button
@@ -92,15 +51,7 @@ export default function LoginPage() {
 
       <div className="mt-4 text-center">
         <p className="text-gray-600 mb-2">Or</p>
-        <button
-          onClick={handleGoogleSignIn}
-          className={`w-full bg-red-500 text-white p-2 rounded ${
-            isLoading ? "opacity-50 cursor-not-allowed" : ""
-          }`}
-          disabled={isLoading}
-        >
-          {isLoading ? "Signing in..." : "Login with Google"}
-        </button>
+        <GoogleSignInButton onClick={handleGoogleSignIn} isLoading={isLoading} />
       </div>
 
       <p className="text-center mt-4">

@@ -1,14 +1,14 @@
-import { NextResponse } from "next/server";
-import { getPrismaClient } from "@/app/lib/prisma";
+import { redirect } from "next/navigation";
 import { getServerSession } from "next-auth";
 import { getAuthOptions } from "@/app/api/auth/getAuthOptions";
+import { getPrismaClient } from "@/app/lib/prisma";
 
-export async function verifyStaff() {
+export async function requireStaff() {
   const authOptions = await getAuthOptions();
   const session = await getServerSession(authOptions);
 
   if (!session || !session.user?.email) {
-    return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
+    redirect("/auth/login");
   }
 
   const prisma = await getPrismaClient();
@@ -17,8 +17,8 @@ export async function verifyStaff() {
   });
 
   if (!user || user.role !== "STAFF") {
-    return NextResponse.json({ message: "Forbidden" }, { status: 403 });
+    redirect("/");
   }
 
-  return user;
+  return { user, session };
 }

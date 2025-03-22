@@ -1,39 +1,9 @@
 "use client";
 
-import { useState } from "react";
-import { useRouter } from "next/navigation";
+import { useCreateEvent } from "@/app/hooks/useCreateEvent";
 
 export default function CreateEvent() {
-  const router = useRouter();
-  const [formData, setFormData] = useState({
-    title: "",
-    description: "",
-    date: "",
-    location: "",
-  });
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-
-    const response = await fetch("/api/events/create", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(formData),
-    });
-
-    if (response.ok) {
-      alert("Event created successfully!");
-      setFormData({ title: "", description: "", date: "", location: "" });
-
-      router.push("/");
-    } else {
-      alert("Error creating event");
-    }
-  };
+  const { formData, handleChange, handleSubmit } = useCreateEvent();
 
   return (
     <div className="max-w-2xl mx-auto p-6">

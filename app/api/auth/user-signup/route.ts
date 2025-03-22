@@ -1,10 +1,12 @@
 import { NextResponse } from "next/server";
-import { prisma } from "@/app/lib/prisma";
 import bcrypt from "bcrypt";
+import { getPrismaClient } from "@/app/lib/prisma"; // <- adjust if needed
 
 export async function POST(req: Request) {
   try {
     const { name, email, password } = await req.json();
+
+    const prisma = await getPrismaClient(); // ← get Prisma with dynamic DB URL
 
     const existingUser = await prisma.user.findUnique({ where: { email } });
     if (existingUser) {

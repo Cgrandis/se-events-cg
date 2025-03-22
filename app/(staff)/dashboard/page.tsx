@@ -1,24 +1,9 @@
-import { redirect } from "next/navigation";
-import { getServerSession } from "next-auth";
-import { authOptions } from "@/app/api/auth/auth-options";
-import { prisma } from "@/app/lib/prisma";
+import { requireStaff } from "@/app/lib/auth/requireStaff";
 import Link from "next/link";
 import LogoutButton from "@/app/(components)/LogoutButton";
 
 export default async function StaffDashboard() {
-  const session = await getServerSession(authOptions);
-
-  if (!session || !session.user?.email) {
-    redirect("/auth/login");
-  }
-
-  const user = await prisma.user.findUnique({
-    where: { email: session.user.email },
-  });
-
-  if (!user || user.role !== "STAFF") {
-    redirect("/");
-  }
+  const { session } = await requireStaff();
 
   return (
     <div className="max-w-4xl mx-auto p-6">
@@ -47,7 +32,6 @@ export default async function StaffDashboard() {
             Manage Profile
           </div>
         </Link>
-        {/* New "View Events" Button */}
         <Link href="/">
           <div className="p-4 bg-purple-500 text-white rounded-lg cursor-pointer text-center">
             View Events

@@ -1,0 +1,4 @@
+{
+    "DATABASE_URL": "postgresql://postgres.rmqmmkiqxfogkxfklguu:f3TT5TEOtSE084k8@aws-0-us-west-1.pooler.supabase.com:6543/postgres?sslmode=require"
+  }
+  

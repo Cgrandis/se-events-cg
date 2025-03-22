@@ -1,11 +1,12 @@
 import { NextResponse } from "next/server";
-import { prisma } from "@/app/lib/prisma";
 import { getServerSession } from "next-auth";
-import { authOptions } from "@/app/api/auth/auth-options";
+import { getAuthOptions } from "@/app/api/auth/getAuthOptions";
+import { getPrismaClient } from "@/app/lib/prisma"; 
 
 export async function POST(req: Request) {
   try {
-    const session = await getServerSession(authOptions);
+    const prisma = await getPrismaClient();
+    const session = await getServerSession(await getAuthOptions());
 
     if (!session || !session.user?.email) {
       return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
@@ -44,7 +45,10 @@ export async function POST(req: Request) {
       },
     });
 
-    return NextResponse.json({ message: "Successfully signed up for the event", signup: newSignup }, { status: 201 });
+    return NextResponse.json(
+      { message: "Successfully signed up for the event", signup: newSignup },
+      { status: 201 }
+    );
   } catch (error) {
     console.error("Error signing up for event:", error);
     return NextResponse.json({ message: "Internal server error" }, { status: 500 });
