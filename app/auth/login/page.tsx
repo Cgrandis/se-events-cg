@@ -40,7 +40,7 @@ export default function LoginPage() {
         />
         <button
           type="submit"
-          className={`w-full bg-blue-500 text-white p-2 rounded ${
+          className={`w-full bg-black text-white p-2 rounded ${
             isLoading ? "opacity-50 cursor-not-allowed" : ""
           }`}
           disabled={isLoading}

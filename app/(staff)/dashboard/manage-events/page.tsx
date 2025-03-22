@@ -34,7 +34,7 @@ export default function ManageEvents() {
               <div className="space-x-2">
                 <button
                   onClick={() => handleEditClick(event)}
-                  className="bg-yellow-500 text-white px-4 py-2 rounded"
+                  className="bg-black text-white px-4 py-2 rounded"
                 >
                   Edit
                 </button>

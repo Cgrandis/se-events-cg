@@ -43,7 +43,7 @@ export default function CreateEvent() {
           className="w-full p-2 border rounded"
           required
         />
-        <button type="submit" className="w-full bg-blue-500 text-white p-2 rounded">
+        <button type="submit" className="w-full bg-black text-white p-2 rounded">
           Create Event
         </button>
       </form>
