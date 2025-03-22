@@ -1,6 +1,10 @@
 import NextAuth from "next-auth";
 import { getAuthOptions } from "../getAuthOptions";
 
-const handler = NextAuth(await getAuthOptions());
+const handler = async () => {
+  const authOptions = await getAuthOptions();
+  return NextAuth(authOptions);
+};
 
-export { handler as GET, handler as POST };
+export const GET = handler;
+export const POST = handler;
