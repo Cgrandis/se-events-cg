@@ -3,9 +3,13 @@ import { prisma } from "@/app/lib/prisma";
 
 export const runtime = "nodejs";
 
+type RouteContext = {
+  params: Promise<{ id: string }>;
+};
+
 export async function GET(
   req: NextRequest,
-  context: { params: Promise<{ id: string }> }
+  context: RouteContext
 ): Promise<NextResponse> {
   const { id } = await context.params;
 
