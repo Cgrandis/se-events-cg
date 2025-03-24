@@ -1,9 +1,8 @@
 import { NextResponse } from "next/server";
-import { getPrismaClient } from "@/app/lib/prisma"; 
+import { prisma } from "@/app/lib/prisma"; 
 
 export async function GET() {
   try {
-    const prisma = await getPrismaClient();
 
     const events = await prisma.event.findMany({
       orderBy: { date: "asc" },

@@ -1,11 +1,10 @@
 import { NextResponse } from "next/server";
 import { getServerSession } from "next-auth";
 import { getAuthOptions } from "@/app/api/auth/getAuthOptions";
-import { getPrismaClient } from "@/app/lib/prisma"; 
+import { prisma } from "@/app/lib/prisma"; 
 
 export async function POST(req: Request) {
   try {
-    const prisma = await getPrismaClient();
     const session = await getServerSession(await getAuthOptions());
 
     if (!session || !session.user?.email) {

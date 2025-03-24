@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { getServerSession } from "next-auth";
 import { getAuthOptions } from "@/app/api/auth/getAuthOptions";
-import { getPrismaClient } from "@/app/lib/prisma"; 
+import { prisma } from "@/app/lib/prisma"; 
 import bcrypt from "bcrypt";
 
 export async function PUT(req: Request) {
@@ -16,8 +16,6 @@ export async function PUT(req: Request) {
   const updateData: { name?: string; password?: string } = {};
   if (name) updateData.name = name;
   if (password) updateData.password = await bcrypt.hash(password, 10);
-
-  const prisma = await getPrismaClient(); 
 
   await prisma.user.update({
     where: { email: session.user.email },

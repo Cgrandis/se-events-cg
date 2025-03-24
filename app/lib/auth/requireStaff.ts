@@ -1,7 +1,7 @@
 import { redirect } from "next/navigation";
 import { getServerSession } from "next-auth";
 import { getAuthOptions } from "@/app/api/auth/getAuthOptions";
-import { getPrismaClient } from "@/app/lib/prisma";
+import { prisma } from "@/app/lib/prisma";
 
 export async function requireStaff() {
   const authOptions = await getAuthOptions();
@@ -11,7 +11,6 @@ export async function requireStaff() {
     redirect("/auth/login");
   }
 
-  const prisma = await getPrismaClient();
   const user = await prisma.user.findUnique({
     where: { email: session.user.email },
   });

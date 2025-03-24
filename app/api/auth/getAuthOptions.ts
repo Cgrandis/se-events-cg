@@ -1,13 +1,11 @@
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
-import { getPrismaClient } from "@/app/lib/prisma";
+import { prisma } from "@/app/lib/prisma";
 import { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import GoogleProvider from "next-auth/providers/google";
 import bcrypt from "bcrypt";
 
 export async function getAuthOptions(): Promise<NextAuthOptions> {
-  const prisma = await getPrismaClient();
-
   return {
     adapter: PrismaAdapter(prisma),
     session: { strategy: "jwt" },

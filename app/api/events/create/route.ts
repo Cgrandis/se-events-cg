@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { getPrismaClient } from "@/app/lib/prisma"; 
+import { prisma } from "@/app/lib/prisma"; 
 import { verifyStaff } from "@/app/api/auth/utils";
 
 export async function POST(req: Request) {
@@ -8,8 +8,6 @@ export async function POST(req: Request) {
 
   try {
     const { title, description, date, location } = await req.json();
-
-    const prisma = await getPrismaClient();
 
     const newEvent = await prisma.event.create({
       data: {

@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { getPrismaClient } from "@/app/lib/prisma";
+import { prisma } from "@/app/lib/prisma";
 import { verifyStaff } from "@/app/api/auth/utils";
 
 export async function DELETE(req: Request) {
@@ -7,7 +7,6 @@ export async function DELETE(req: Request) {
   if (user instanceof NextResponse) return user;
 
   try {
-    const prisma = await getPrismaClient();
     const { eventId } = await req.json();
 
     const event = await prisma.event.findUnique({
