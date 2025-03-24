@@ -1,7 +1,7 @@
 import { getEventDetails } from "@/app/hooks/getEventDetails";
 
-export default async function EventDetailsPage({ params }: { params: Promise<{ id: string }> }) {
-  const { id } = await params;
+export default async function EventDetailsPage({ params }: { params: { id: string } }) {
+  const { id } = params;
 
   const event = await getEventDetails(id);
 
