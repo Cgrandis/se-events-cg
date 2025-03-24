@@ -1,15 +1,10 @@
 import { PageProps } from "@/app/types/auth";
+import { getEventDetails } from "@/app/hooks/getEventDetails";
 
 export default async function EventDetailsPage({ params }: PageProps) {
-  const { id } = await params;
+  const event = await getEventDetails(params.id);
 
-  const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/events/${id}`, {
-    cache: "no-store",
-  });
-  console.log("DATABASE_URL:", process.env.DATABASE_URL);
-
-
-  if (!res.ok) {
+  if (!event) {
     return (
       <div className="max-w-2xl mx-auto p-6">
         <h1 className="text-2xl font-bold text-red-600">Event Not Found</h1>
@@ -17,8 +12,6 @@ export default async function EventDetailsPage({ params }: PageProps) {
       </div>
     );
   }
-
-  const event = await res.json();
 
   return (
     <div className="max-w-2xl mx-auto p-6">

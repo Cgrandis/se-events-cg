@@ -63,7 +63,7 @@ The app will be available at [http://localhost:3000](http://localhost:3000)
 - **Password:** `ops123`
 
 ### 👩‍💼 Staff Account
-- **Email:** `janeyep@gmail.com`  
+- **Email:** `janeyep@event.com`  
 - **Password:** `ops123`
 
 ---
