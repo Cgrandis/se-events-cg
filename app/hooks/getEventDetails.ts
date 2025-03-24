@@ -2,7 +2,7 @@ import { Event } from "@/app/types/events";
 
 export async function getEventDetails(id: string): Promise<Event | null> {
   const baseUrl =
-    process.env.NEXT_PUBLIC_BASE_URL || "https://v0-se-events-cg.vercel.app";
+    process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
 
   const res = await fetch(`${baseUrl}/api/events/${id}`, {
     cache: "no-store",
