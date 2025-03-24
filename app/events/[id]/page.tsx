@@ -1,8 +1,9 @@
-import { PageProps } from "@/app/types/auth";
 import { getEventDetails } from "@/app/hooks/getEventDetails";
 
-export default async function EventDetailsPage({ params }: PageProps) {
-  const event = await getEventDetails(params.id);
+export default async function EventDetailsPage({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params;
+
+  const event = await getEventDetails(id);
 
   if (!event) {
     return (

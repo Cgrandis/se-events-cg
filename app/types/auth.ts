@@ -47,6 +47,7 @@ export interface HeaderProps {
     userEmail?: string;
   }
 
-  export interface PageProps {
-    params: { id: string };
+export interface PageProps {
+    params: Promise<{ id: string }>;
   }
+  
