@@ -10,10 +10,8 @@ export function useEventDetails(id: string) {
 
     async function fetchEvent() {
       try {
-        const baseUrl =
-          process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
-
-        const res = await fetch(`${baseUrl}/api/events/${id}`, {
+ 
+        const res = await fetch(`/api/events/${id}`, {
           cache: "no-store",
         });
 
